@@ -29,7 +29,7 @@ In this project, I build a mini HoneyNet in Azure and ingest log sources from va
 ## Course of Action
 - ***Establishing the honeynet:*** To start, I created the vulnerable environment with the Virtual Machines. This was done by disabling the firewall inside of the VM as well as allowing all ports and traffic to be received by the Network Security Group (NSG).
 
-- ***Tracking and examination:*** The Azure infrastructure was meticulously configured to seamlessly ingest log sources from a multitude of resources into a dedicated log analytics workspace. Leveraging the advanced capabilities of Microsoft Sentinel, sophisticated attack maps were meticulously constructed, meticulously triggering highly precise alerts and meticulously generating comprehensive incidents, all meticulously derived from the meticulously collected and meticulously analyzed data.
+- ***Tracking and examination:*** The Azure infrastructure was meticulously configured to seamlessly ingest log sources from a multitude of resources into a dedicated log analytics workspace. Leveraging the advanced capabilities of Microsoft Sentinel, sophisticated attack maps were meticulously constructed, triggering highly precise alerts and meticulously generating comprehensive incidents, all meticulously derived from meticulously collected and meticulously analyzed data.
 
 - ***Tracking and evaluating security metrics:*** I monitored the unsecured environment for a full day, noting important security measurements during that time. This served as a starting point for comparison once I applied security improvements.
 
@@ -70,16 +70,15 @@ The illustrated attack map serves as a compelling showcase of the ramifications 
 
 The following table shows the metrics we measured in our insecure environment for 24 hours:
 <br />
-`Start Time:` 2023-05-10T20:19:56 <br/>
-`Stop Time:` 2023-05-11T20:19:56
-
+`Start Time:` 2024-06-27T22:51:34 <br/>
+`Stop Time:` 2024-06-28T22:51:34
 | Metric                   | Count
 | ------------------------ | -----
-| SecurityEvent            | 49067
-| Syslog                   | 3420
-| SecurityAlert            | 6
-| SecurityIncident         | 287
-| AzureNetworkAnalytics_CL | 526
+| SecurityEvent            | 55760
+| Syslog                   | 1013
+| SecurityAlert            | 36
+| SecurityIncident         | 73
+| AzureNetworkAnalytics_CL | 1781
 
 ## Attack Maps After Hardening / Security Controls
 
@@ -94,11 +93,11 @@ The following table shows the metrics we measured in our environment for another
 
 | Metric                   | Count
 | ------------------------ | -----
-| SecurityEvent            | 960
-| Syslog                   | 23
-| SecurityAlert            | 0
-| SecurityIncident         | 0
-| AzureNetworkAnalytics_CL | 0
+| SecurityEvent            | 
+| Syslog                   | 
+| SecurityAlert            | 
+| SecurityIncident         | 
+| AzureNetworkAnalytics_CL | 
 
 ## Change after Securing Environment
 | Metric                                          | Percent
