@@ -1,15 +1,14 @@
-# Azure-SOC-Honeynet-Project
+# Azure SOC Honeynet Project
 
-<!--# Azure-SOC-Honeynet-Project-->
 # Building a SOC + Honeynet in Azure (Live Traffic)
 ![SOC Honeynet (1)](https://github.com/0xbythesecond/Azure-SOC-Honeynet-Project/assets/23303634/43177fa9-4746-4f8d-8774-f9aca74b891d)
 
 ## Introduction
-I present a summary of varying parts to create a HoneyNet via Microsoft Azure. This HoneyNet is to provide a visual representation of real-world cyber attacks from all parts of the world. The HoneyNet is designed to allow me to gather data related to the different bad actors from across the world from differing IP addresses.
+This project details the creation of a HoneyNet using Microsoft Azure's platform. It is used to simulate what a SOC analyst would do when their systems are attacked and how they would try to harden their system. Using this HoneyNet I was able to gather data that would allow me to see different bad actors from across the world and IP addresses trying to compromise my system. All credit for helping me with this project goes to the YouTube link below and the visuals for this project in the GitHub link. 
 
-## Sub-Intro
-In this project, I build a mini HoneyNet in Azure and ingest log sources from various resources into a Log Analytics workspace, which is then used by Microsoft Sentinel to build attack maps, trigger alerts, and create incidents. I measured some security metrics in the insecure environment for 24 hours, apply some security controls to harden the environment, measured metrics for another 24 hours, then show the results below. 
-
+***Note: I will recommend doing this project within the span of a few days. Dedicate one day to creating the systems, the second day leave the systems running so that you can gather enough data, the third day dedicated to gathering the results from leaving the systems vulnerable and hardening them, the fourth day leave the system running so that you can gather enough data after hardening the systems, the last day would be gathering the data and creating some comparison between the before and after the hardening session.***
+- ### [YouTube: How To Build a SOC + Honeynet in Azure](https://youtu.be/mOjbD7FkUUI)
+- ### [GitHub](https://github.com/0xbythesecond/Azure-SOC-Honeynet-Project?tab=readme-ov-file)
 
 ## Azure Resources Deployed, Technologies, and Regulations used:
 - [Azure Virtual Network](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview) (VNet)
@@ -23,8 +22,7 @@ In this project, I build a mini HoneyNet in Azure and ingest log sources from va
 - [Windows Remote Desktop](https://support.microsoft.com/en-us/windows/how-to-use-remote-desktop-5fe128d5-8fb1-7a23-3b8a-41e636865e8c) for Remote Access
 - [Command Line Interface](https://www.w3schools.com/whatis/whatis_cli.asp) (CLI) for System Management
 - [PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.3) for Automation and Configuration Management
-- [NIST SP 800-53 Revision 4](https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final) for Security Controls
-- [NIST SP 800-61 Revision 2](https://www.nist.gov/privacy-framework/nist-sp-800-61) for Incident Handling Guidance
+- [NIST SP 800-53 Revision 5](https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final) for Security Controls (Within the Defender Program)
 
 ## Course of Action
 - ***Establishing the honeynet:*** To start, I created the vulnerable environment with the Virtual Machines. This was done by disabling the firewall inside of the VM as well as allowing all ports and traffic to be received by the Network Security Group (NSG).
@@ -54,16 +52,20 @@ In the "AFTER" evaluation stage, the Network Security Groups underwent fortifica
 
 ## Attack Maps Before Hardening / Security Controls
 The visual representation presented below provides an overview of the assault endeavors targeted at a publicly accessible Microsoft SQL server throughout a span of 24 hours. The plotted data points on the map delineate the precise origins of these attacks or attempted logins.
-![MSSQL Allowed Access](https://i.imgur.com/UHVHIGM.png) <br />
+![MSSQL Auth](https://github.com/caseypineda/Azure-SOC-Honeynet-Project/assets/136929096/c1e30390-e148-4018-b001-299cb5489ac9) <br />
 
 The depicted attack map elucidates the multitude of syslog authentication failures encountered by the Linux server I provisioned, elucidating the presence of unsanctioned endeavors to gain entry from external sources beyond the confines of the local network. This serves as an emphatic reminder underscoring the indispensability of fortifying Linux servers with robust authentication protocols and diligently scrutinizing system logs to detect and thwart potential intrusions.
-![Linux Syslog Auth Failures](https://i.imgur.com/8QbjEwL.png) <br />
+![Linux SSH Auth](https://github.com/caseypineda/Azure-SOC-Honeynet-Project/assets/136929096/8edc8d6f-7062-4ea2-a781-98b07f848152) <br />
 
 The exhibited attack map encapsulates a multitude of RDP (Remote Desktop Protocol) and SMB (Server Message Block) failures, vividly exemplifying the unrelenting endeavors of potential assailants to exploit these specific protocols. The visual depiction accentuates the imperative nature of fortifying remote access and file-sharing services as a means to safeguard against illicit entry and mitigate the looming cyber threats that may ensue.
-![Windows RDP/SMB Auth Failures](https://i.imgur.com/ALHFE3u.png) <br />
+![Windows RDP](https://github.com/caseypineda/Azure-SOC-Honeynet-Project/assets/136929096/625ee2e4-b4d2-42f0-9fa3-28c74cb63992) <br />
 
 The illustrated attack map serves as a compelling showcase of the ramifications stemming from the act of leaving the Network Security Group (NSG) unrestricted, thereby facilitating the unhindered ingress of malicious network traffic. This visualization effectively emphasizes the criticality of deploying robust security protocols, including the imposition of stringent NSG rules, as a means to thwart unauthorized entry and mitigate the inherent risks posed by potential threats.
-![NSG Allowed Inbound Malicious Flows](https://i.imgur.com/W2iCXmv.png)
+![NSG Malicious](https://github.com/caseypineda/Azure-SOC-Honeynet-Project/assets/136929096/b9e87cb7-01e9-4ad3-a09c-55960f710640)
+
+
+
+
 
 
 ## Metrics Before Hardening / Security Controls
@@ -112,7 +114,71 @@ The following table shows the metrics we measured in our environment for another
 ## Reflection
 This has been both a challenging and rewarding experience creating this lab and how real-world traffic can be analyzed using attack maps as well as KQL data to parse out different metrics. It was a beautiful sight to see everything come together and have the ability to paint a picture of an insecure environment as well as one that is secure and you no longer see the malicious traffic after implementing the various security controls. During the process of leaving the resources vulnerable, I was able to see the differing IP addresses of the bad actors and the user names that they were attempting to access my virtual machines. After the hardening was completed and waiting 24 hours, it was quite a sight to behold when seeing that there were 0 results found that represent any allowed traffic from the bad actors on the public internet.
 
+This project was not only challenging but also very insightful on what a SOC analysis might do on a daily bases. While doing this project, I was able to see where the attackers are from around the world 
+Even though I used a guide to help me along the way to create the machine and understanding the code needed to create the maps and gather the data, there were some unsuspecting troubleshooting that needed to be done. As well as, trying to figure out what controls that needed to be implemented to harden the systems enough that would show significant changing in the data collected. 
+
 ## Conclusion
 This project involved the establishment of a mini honeynet within the Microsoft Azure platform, where diverse log sources were seamlessly integrated into a dedicated Log Analytics workspace. Microsoft Sentinel played a pivotal role in proactively generating alerts and initiating incidents based on the logs ingested. Notably, comprehensive metrics were diligently measured in the vulnerable environment prior to the implementation of security controls, followed by a subsequent assessment after fortifying the infrastructure. The remarkable outcome emerged as a significant reduction in the frequency of security events and incidents, which undeniably attested to the efficacy of the implemented security measures.
 
 It is important to acknowledge that if the network's resources were extensively utilized by regular users, it is conceivable that a greater number of security events and alerts could have been generated within the 24-hour timeframe subsequent to the enforcement of the security controls.
+
+## KQL Queries
+
+| Metric                                       | Query                                                                                                                                            |
+|----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| Start/Stop Time                              | range x from 1 to 1 step 1<br>\| project StartTime = ago(24h), StopTime = now()                                                                  |
+| Security Events (Windows VMs)                | SecurityEvent<br>\| where TimeGenerated>= ago(24h)<br>\| count                                                                                   |
+| Syslog (Linux VMs)                           | Syslog<br>\| where TimeGenerated >= ago(24h)<br>\| count                                                                                         |
+| SecurityAlert (Microsoft Defender for Cloud) | SecurityAlert<br>\| where DisplayName !startswith "CUSTOM" and DisplayName !startswith "TEST"<br>\| where TimeGenerated >= ago(24h)<br>\| count |
+| Security Incident (Sentinel Incidents)       | SecurityIncident<br>\| where TimeGenerated >= ago(24h)<br>\| count                                                                               |
+| NSG Inbound Malicious Flows Allowed          | AzureNetworkAnalytics_CL<br>\| where FlowType_s == "MaliciousFlow" and AllowedInFlows_d > 0<br>\| where TimeGenerated >= ago(24h)<br>\| count    |
+
+
+
+
+
+Notes:
+Here is what I did to resecure the network and VM that was not stated in the video used to perform this project:
+
+- I deleted the Attack VM, so I could focus on securing the Linux and Windows VM only
+    - Some of the suggestion for securing the systems did have the Attack VM listed
+- Go to the Network tab
+  - Enable public network access for only selected virtual networks and IP addresses
+- Go to your Windows VM setting section
+  - Click on Extensions and application
+  - Add Mircosoft Antimalware extension
+  - Then connect to the Windows through the remote desktop
+- I also happened to change the firewall setting
+   - exclude all inbound connections
+   - Note: This will prevent you from entering through remote desktop once applying this rule
+- Create a subnet for both the Linux and Windows VM
+    - Go to Virtual Networks
+    - Head to the setting sections
+    - Click on Subnets
+    - Add 2 subnets to the configurations you want for both the Linux and Windows VM
+- Disk Encryption
+  - [Link](https://learn.microsoft.com/en-us/azure/virtual-machines/disks-enable-host-based-encryption-portal?tabs=azure-powershell&WT.mc_id=Portal-Microsoft_Azure_Security#set-up-your-disk-encryption-set)
+- There is some hardening process that I had to exempt because the reasoning was that it was either for the attack VM or something else:
+  - Take for instance Log Analytics agent should be installed on virtual machines
+      - I needed to do this for my Windows VM however I wasn't able to since "Log Analytics agent should be installed on virtual machines"
+      - So an exemption was needed
+- Enable a backup
+  - [Link](https://learn.microsoft.com/en-us/azure/site-recovery/site-recovery-monitor-and-troubleshoot#monitor-in-the-dashboard)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
