@@ -26,8 +26,7 @@ This project details the creation of a HoneyNet using Microsoft Azure's platform
 - ***Establishing the honeynet:*** To begin this project, ensure you have an account and create two virtual machines: one Windows and one Linux. Ensure both systems are on the same network and in the same time zone. Once both VMs and their connected networks are created, open all ports and traffic to the VMs using Network Security Groups (NSG). *Note: the asterisk is used to indicate all ports.*
 
 - ***Tracking and examination:*** The Azure infrastructure was meticulously configured to seamlessly ingest log sources from a multitude of resources into a dedicated log analytics workspace. Leveraging the advanced capabilities of Microsoft Sentinel, sophisticated attack maps were meticulously constructed, triggering highly precise alerts and meticulously generating comprehensive incidents, all meticulously derived from meticulously collected and meticulously analyzed data.
--   Since the Azure infrastructure allows for seamless ingestion of logs, I was able to create a rule that allowed for logs from different sources to be processed into a dedicated log analytics workspace. Using to advance features Microsoft Sentinel has, I was able to create attack maps
--   (https://github.com/caseypineda/Azure-SOC-Honeynet-Project/edit/main/README.md#kql-queries)
+-   Since the Azure infrastructure allows for seamless ingestion of logs, I was able to create a rule that allowed for logs from different sources to be processed into a dedicated log analytics workspace. Using to advance features Microsoft Sentinel has, I was able to create attack maps, see Map Code folder, within the workbooks they provided. 
 
 - ***Tracking and evaluating security metrics:*** I monitored the unsecured environment for a full day, noting important security measurements during that time. This served as a starting point for comparison once I applied security improvements.
 
