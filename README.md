@@ -4,11 +4,9 @@
 ![SOC Honeynet (1)](https://github.com/0xbythesecond/Azure-SOC-Honeynet-Project/assets/23303634/43177fa9-4746-4f8d-8774-f9aca74b891d)
 
 ## Introduction
-This project details the creation of a HoneyNet using Microsoft Azure's platform. It is used to simulate what a SOC analyst would do when their systems are attacked and how they would try to harden their system. Using this HoneyNet I was able to gather data that would allow me to see different bad actors from across the world and IP addresses trying to compromise my system. All credit for helping me with this project goes to the YouTube link below and the visuals for this project in the GitHub link. 
+This project details the creation of a HoneyNet using Microsoft Azure's platform to simulate the actions of a SOC analyst during an attack and how they would harden their system. Using this HoneyNet, I gathered data revealing various bad actors and IP addresses attempting to compromise my system. All credit for assistance goes to the YouTube link below, and visuals are available in the GitHub link. 
 
-***Note: I will recommend doing this project within the span of a few days. Dedicate one day to creating the systems, the second day leave the systems running so that you can gather enough data, the third day dedicated to gathering the results from leaving the systems vulnerable and hardening them, the fourth day leave the system running so that you can gather enough data after hardening the systems, the last day would be gathering the data and creating some comparison between the before and after the hardening session.***
-- ### [YouTube: How To Build a SOC + Honeynet in Azure](https://youtu.be/mOjbD7FkUUI)
-- ### [GitHub](https://github.com/0xbythesecond/Azure-SOC-Honeynet-Project?tab=readme-ov-file)
+***Note***: *I recommend completing this project over several days: dedicate the first day to creating the systems, the second day to gathering initial data, the third day to analyzing the results and hardening the systems, the fourth day to collecting post-hardening data, and the fifth day to comparing the before and after states. If using Azure's free trial, ensure all resources are deleted after the project to avoid costs. Check your account a few days after completion to confirm no charges are incurred.*
 
 ## Azure Resources Deployed, Technologies, and Regulations used:
 - [Azure Virtual Network](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview) (VNet)
@@ -25,9 +23,11 @@ This project details the creation of a HoneyNet using Microsoft Azure's platform
 - [NIST SP 800-53 Revision 5](https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final) for Security Controls (Within the Defender Program)
 
 ## Course of Action
-- ***Establishing the honeynet:*** To start, I created the vulnerable environment with the Virtual Machines. This was done by disabling the firewall inside of the VM as well as allowing all ports and traffic to be received by the Network Security Group (NSG).
+- ***Establishing the honeynet:*** To begin this project, ensure you have an account and create two virtual machines: one Windows and one Linux. Ensure both systems are on the same network and in the same time zone. Once both VMs and their connected networks are created, open all ports and traffic to the VMs using Network Security Groups (NSG). *Note: the asterisk is used to indicate all ports.*
 
 - ***Tracking and examination:*** The Azure infrastructure was meticulously configured to seamlessly ingest log sources from a multitude of resources into a dedicated log analytics workspace. Leveraging the advanced capabilities of Microsoft Sentinel, sophisticated attack maps were meticulously constructed, triggering highly precise alerts and meticulously generating comprehensive incidents, all meticulously derived from meticulously collected and meticulously analyzed data.
+-   Since the Azure infrastructure allows for seamless ingestion of logs, I was able to create a rule that allowed for logs from different sources to be processed into a dedicated log analytics workspace. Using to advance features Microsoft Sentinel has, I was able to create attack maps
+-   (https://github.com/caseypineda/Azure-SOC-Honeynet-Project/edit/main/README.md#kql-queries)
 
 - ***Tracking and evaluating security metrics:*** I monitored the unsecured environment for a full day, noting important security measurements during that time. This served as a starting point for comparison once I applied security improvements.
 
@@ -90,58 +90,32 @@ The following table shows the metrics we measured in our insecure environment fo
 
 The following table shows the metrics we measured in our environment for another 24 hours, but after we applied security controls:
 <br />
-`Start Time:` 2023-05-11T23:44:13.<br />
-`Stop Time:`	2023-05-12T23:44:13.
+`Start Time:` 2024-06-29T23:38:54.<br />
+`Stop Time:`	2024-06-30T23:38:54.
 
 | Metric                   | Count
 | ------------------------ | -----
-| SecurityEvent            | 
-| Syslog                   | 
-| SecurityAlert            | 
-| SecurityIncident         | 
-| AzureNetworkAnalytics_CL | 
+| SecurityEvent            | 0
+| Syslog                   | 0
+| SecurityAlert            | 0
+| SecurityIncident         | 0
+| AzureNetworkAnalytics_CL | 0
 
 ## Change after Securing Environment
 | Metric                                          | Percent
 | ----------------------------------------------- | -----
-| Security Event (Windows VM)                     |  -98.04%
-| Syslog (Linux VM)                               |  -99.33%
+| Security Event (Windows VM)                     |  -100.00%
+| Syslog (Linux VM)                               |  -100.00%
 | Security Alert (Microsoft Defender for Cloud)   |  -100.00%
 | Security Incident (Sentinel Incidents)          |  -100.00%
 | NSG Inbound Malicious Flows Allowed             |  -100.00%
 
 
-## Reflection
-This has been both a challenging and rewarding experience creating this lab and how real-world traffic can be analyzed using attack maps as well as KQL data to parse out different metrics. It was a beautiful sight to see everything come together and have the ability to paint a picture of an insecure environment as well as one that is secure and you no longer see the malicious traffic after implementing the various security controls. During the process of leaving the resources vulnerable, I was able to see the differing IP addresses of the bad actors and the user names that they were attempting to access my virtual machines. After the hardening was completed and waiting 24 hours, it was quite a sight to behold when seeing that there were 0 results found that represent any allowed traffic from the bad actors on the public internet.
-
-This project was not only challenging but also very insightful on what a SOC analysis might do on a daily bases. While doing this project, I was able to see where the attackers are from around the world 
-Even though I used a guide to help me along the way to create the machine and understanding the code needed to create the maps and gather the data, there were some unsuspecting troubleshooting that needed to be done. As well as, trying to figure out what controls that needed to be implemented to harden the systems enough that would show significant changing in the data collected. 
-
-## Conclusion
-This project involved the establishment of a mini honeynet within the Microsoft Azure platform, where diverse log sources were seamlessly integrated into a dedicated Log Analytics workspace. Microsoft Sentinel played a pivotal role in proactively generating alerts and initiating incidents based on the logs ingested. Notably, comprehensive metrics were diligently measured in the vulnerable environment prior to the implementation of security controls, followed by a subsequent assessment after fortifying the infrastructure. The remarkable outcome emerged as a significant reduction in the frequency of security events and incidents, which undeniably attested to the efficacy of the implemented security measures.
-
-It is important to acknowledge that if the network's resources were extensively utilized by regular users, it is conceivable that a greater number of security events and alerts could have been generated within the 24-hour timeframe subsequent to the enforcement of the security controls.
-
-## KQL Queries
-
-| Metric                                       | Query                                                                                                                                            |
-|----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-| Start/Stop Time                              | range x from 1 to 1 step 1<br>\| project StartTime = ago(24h), StopTime = now()                                                                  |
-| Security Events (Windows VMs)                | SecurityEvent<br>\| where TimeGenerated>= ago(24h)<br>\| count                                                                                   |
-| Syslog (Linux VMs)                           | Syslog<br>\| where TimeGenerated >= ago(24h)<br>\| count                                                                                         |
-| SecurityAlert (Microsoft Defender for Cloud) | SecurityAlert<br>\| where DisplayName !startswith "CUSTOM" and DisplayName !startswith "TEST"<br>\| where TimeGenerated >= ago(24h)<br>\| count |
-| Security Incident (Sentinel Incidents)       | SecurityIncident<br>\| where TimeGenerated >= ago(24h)<br>\| count                                                                               |
-| NSG Inbound Malicious Flows Allowed          | AzureNetworkAnalytics_CL<br>\| where FlowType_s == "MaliciousFlow" and AllowedInFlows_d > 0<br>\| where TimeGenerated >= ago(24h)<br>\| count    |
-
-
-
-
-
-Notes:
-Here is what I did to resecure the network and VM that was not stated in the video used to perform this project:
+## Hardening Stratiges
+- Hardening techniques are going to differ between me and you. This is what I did to harden my machines to get the results I wanted, but be careful as certain settings can be irreversible.
 
 - I deleted the Attack VM, so I could focus on securing the Linux and Windows VM only
-    - Some of the suggestion for securing the systems did have the Attack VM listed
+    - Some of the suggestions for securing the systems did have the Attack VM listed
 - Go to the Network tab
   - Enable public network access for only selected virtual networks and IP addresses
 - Go to your Windows VM setting section
@@ -166,19 +140,22 @@ Here is what I did to resecure the network and VM that was not stated in the vid
   - [Link](https://learn.microsoft.com/en-us/azure/site-recovery/site-recovery-monitor-and-troubleshoot#monitor-in-the-dashboard)
 
 
+## Reflection
+This project was both challenging and insightful, offering a glimpse into the daily operations of a Security Operations Center (SOC). Witnessing my work come together despite encountering errors was incredibly rewarding. The project highlighted the significant issues that can arise in an insured environment if it is not secured promptly. One of the most enlightening aspects was observing the state of an insecure system after 24 hours and then seeing the results after securing it, which underscored the importance of timely security measures. Throughout the project, I identified the locations of attackers, with some surprising results. The logs provided extensive information about the attackers, including their IP addresses and actions. This experience helped me understand the critical role of a SOC analyst in securing vulnerabilities before thousands of potential attackers can exploit them.
 
+## Conclusion
+This project involved the establishment of a mini honeynet within the Microsoft Azure platform, where diverse log sources were seamlessly integrated into a dedicated Log Analytics workspace. Microsoft Sentinel played a pivotal role in proactively generating alerts and initiating incidents based on the logs ingested. Notably, comprehensive metrics were diligently measured in the vulnerable environment prior to the implementation of security controls, followed by a subsequent assessment after fortifying the infrastructure. The remarkable outcome emerged as a significant reduction in the frequency of security events and incidents, which undeniably attested to the efficacy of the implemented security measures.
 
+It is important to acknowledge that if the network's resources were extensively utilized by regular users, it is conceivable that a greater number of security events and alerts could have been generated within the 24-hour timeframe subsequent to the enforcement of the security controls.
 
+## KQL Queries
 
-
-
-
-
-
-
-
-
-
-
-  
+| Metric                                       | Query                                                                                                                                            |
+|----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| Start/Stop Time                              | range x from 1 to 1 step 1<br>\| project StartTime = ago(24h), StopTime = now()                                                                  |
+| Security Events (Windows VMs)                | SecurityEvent<br>\| where TimeGenerated>= ago(24h)<br>\| count                                                                                   |
+| Syslog (Linux VMs)                           | Syslog<br>\| where TimeGenerated >= ago(24h)<br>\| count                                                                                         |
+| SecurityAlert (Microsoft Defender for Cloud) | SecurityAlert<br>\| where DisplayName !startswith "CUSTOM" and DisplayName !startswith "TEST"<br>\| where TimeGenerated >= ago(24h)<br>\| count |
+| Security Incident (Sentinel Incidents)       | SecurityIncident<br>\| where TimeGenerated >= ago(24h)<br>\| count                                                                               |
+| NSG Inbound Malicious Flows Allowed          | AzureNetworkAnalytics_CL<br>\| where FlowType_s == "MaliciousFlow" and AllowedInFlows_d > 0<br>\| where TimeGenerated >= ago(24h)<br>\| count    |
 
