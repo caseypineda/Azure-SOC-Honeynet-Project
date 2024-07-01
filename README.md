@@ -25,14 +25,16 @@ This project details the creation of a HoneyNet using Microsoft Azure's platform
 ## Course of Action
 - ***Establishing the honeynet:*** To begin this project, ensure you have an account and create two virtual machines: one Windows and one Linux. Ensure both systems are on the same network and in the same time zone. Once both VMs and their connected networks are created, open all ports and traffic to the VMs using Network Security Groups (NSG). *Note: the asterisk is used to indicate all ports.*
 
-- ***Tracking and examination:*** The Azure infrastructure was meticulously configured to seamlessly ingest log sources from a multitude of resources into a dedicated log analytics workspace. Leveraging the advanced capabilities of Microsoft Sentinel, sophisticated attack maps were meticulously constructed, triggering highly precise alerts and meticulously generating comprehensive incidents, all meticulously derived from meticulously collected and meticulously analyzed data.
--   Since the Azure infrastructure allows for seamless ingestion of logs, I was able to create a rule that allowed for logs from different sources to be processed into a dedicated log analytics workspace. Using to advance features Microsoft Sentinel has, I was able to create attack maps, see Map Code folder, within the workbooks they provided. 
+- ***Tracking and examination:*** Since the Azure infrastructure allows for seamless ingestion of logs, I created a rule to process logs from different sources into a dedicated Log Analytics workspace. Utilizing the advanced features of Microsoft Sentinel, I generated attack maps (see Map Code folder) within the provided workbooks. To achieve this, download and export the geoip file to Sentinel's watchlist under the same name, as it is necessary for proper functionality. The Xpath text file will be used in the data sources tab within the Log Analytics workspace to retrieve logs from the Windows VM. Regularly monitor these logs and use the attack maps to examine and track any malicious activity effectively.
 
 - ***Tracking and evaluating security metrics:*** I monitored the unsecured environment for a full day, noting important security measurements during that time. This served as a starting point for comparison once I applied security improvements.
+-   
 
 - ***Addressing and resolving security incidents:*** Following the resolution of incidents and identification of vulnerabilities, I proceeded to fortify the environment by implementing security best practices and incorporating Azure-specific recommendations.
+-   
 
 - ***Analysis after implementing remediation measures:*** An additional 24-hour period was dedicated to the meticulous re-observation of the environment, facilitating a comprehensive evaluation of the security metrics. The resulting data was then meticulously juxtaposed with the initial baseline, enabling a rigorous comparative analysis.
+-   
 
 The metrics we will show are:
 - SecurityEvent (Windows Event Logs)
@@ -44,26 +46,29 @@ The metrics we will show are:
 ## Architecture Before Hardening / Security Controls
 ![Architecture Diagram](https://i.imgur.com/gBvHJo4.gif)
 In the "BEFORE" measurement phase, it was observed that all resources were initially provisioned with direct internet exposure. The Virtual Machines were configured with open Network Security Groups and permissive built-in firewalls, while other resources were deployed with publicly accessible endpoints, thereby rendering the usage of Private Endpoints unnecessary.
+  
 
 ## Architecture After Hardening / Security Controls
 ![Architecture Diagram](https://i.imgur.com/oQtbais.gif)
 In the "AFTER" evaluation stage, the Network Security Groups underwent fortification measures whereby all traffic, with the exception of my administrative workstation, was comprehensively blocked. Additionally, other resources were fortified by leveraging their built-in firewalls alongside the implementation of Private Endpoint functionality.
+  
 
 ## Attack Maps Before Hardening / Security Controls
 The visual representation presented below provides an overview of the assault endeavors targeted at a publicly accessible Microsoft SQL server throughout a span of 24 hours. The plotted data points on the map delineate the precise origins of these attacks or attempted logins.
+  
 ![MSSQL Auth](https://github.com/caseypineda/Azure-SOC-Honeynet-Project/assets/136929096/c1e30390-e148-4018-b001-299cb5489ac9) <br />
 
 The depicted attack map elucidates the multitude of syslog authentication failures encountered by the Linux server I provisioned, elucidating the presence of unsanctioned endeavors to gain entry from external sources beyond the confines of the local network. This serves as an emphatic reminder underscoring the indispensability of fortifying Linux servers with robust authentication protocols and diligently scrutinizing system logs to detect and thwart potential intrusions.
+  
 ![Linux SSH Auth](https://github.com/caseypineda/Azure-SOC-Honeynet-Project/assets/136929096/8edc8d6f-7062-4ea2-a781-98b07f848152) <br />
 
 The exhibited attack map encapsulates a multitude of RDP (Remote Desktop Protocol) and SMB (Server Message Block) failures, vividly exemplifying the unrelenting endeavors of potential assailants to exploit these specific protocols. The visual depiction accentuates the imperative nature of fortifying remote access and file-sharing services as a means to safeguard against illicit entry and mitigate the looming cyber threats that may ensue.
+  
 ![Windows RDP](https://github.com/caseypineda/Azure-SOC-Honeynet-Project/assets/136929096/625ee2e4-b4d2-42f0-9fa3-28c74cb63992) <br />
 
 The illustrated attack map serves as a compelling showcase of the ramifications stemming from the act of leaving the Network Security Group (NSG) unrestricted, thereby facilitating the unhindered ingress of malicious network traffic. This visualization effectively emphasizes the criticality of deploying robust security protocols, including the imposition of stringent NSG rules, as a means to thwart unauthorized entry and mitigate the inherent risks posed by potential threats.
+  
 ![NSG Malicious](https://github.com/caseypineda/Azure-SOC-Honeynet-Project/assets/136929096/b9e87cb7-01e9-4ad3-a09c-55960f710640)
-
-
-
 
 
 
@@ -83,7 +88,7 @@ The following table shows the metrics we measured in our insecure environment fo
 
 ## Attack Maps After Hardening / Security Controls
 
-  >**Note**: All map queries actually returned no results due to no instances of malicious activity for the 24-hour period after hardening.
+  >**Note**: All the attack maps did not show any indication of change after hardening; however, the metrics tell a different story. The metrics highlighted significant improvements in system security post-hardening, revealing the effectiveness of the implemented security measures.
 
 ## Metrics After Hardening / Security Controls
 
@@ -111,7 +116,7 @@ The following table shows the metrics we measured in our environment for another
 
 
 ## Hardening Stratiges
-- Hardening techniques are going to differ between me and you. This is what I did to harden my machines to get the results I wanted, but be careful as certain settings can be irreversible.
+- Hardening techniques are going to differ between me and you. These are the steps I took to harden my machines to get the results I wanted, but be careful as certain settings can be irreversible.
 
 - I deleted the Attack VM, so I could focus on securing the Linux and Windows VM only
     - Some of the suggestions for securing the systems did have the Attack VM listed
@@ -144,6 +149,8 @@ This project was both challenging and insightful, offering a glimpse into the da
 
 ## Conclusion
 This project involved the establishment of a mini honeynet within the Microsoft Azure platform, where diverse log sources were seamlessly integrated into a dedicated Log Analytics workspace. Microsoft Sentinel played a pivotal role in proactively generating alerts and initiating incidents based on the logs ingested. Notably, comprehensive metrics were diligently measured in the vulnerable environment prior to the implementation of security controls, followed by a subsequent assessment after fortifying the infrastructure. The remarkable outcome emerged as a significant reduction in the frequency of security events and incidents, which undeniably attested to the efficacy of the implemented security measures.
+
+-
 
 It is important to acknowledge that if the network's resources were extensively utilized by regular users, it is conceivable that a greater number of security events and alerts could have been generated within the 24-hour timeframe subsequent to the enforcement of the security controls.
 
