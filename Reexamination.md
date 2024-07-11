@@ -12,10 +12,15 @@
 | SecurityEvent            | 0
 | Syslog                   | 6785
 | SecurityAlert            | 3
-| SecurityIncident         | 0
+| SecurityIncident         | 0 ->1
 | AzureNetworkAnalytics_CL | 1832
 
 **Note:** I'm unsure why security events and incidents aren't being counted. I may have missed a step or two when creating the pathways to these logs. This means I'll need to go through the entire process again in the future to better understand how to accurately connect the logs and obtain the intended data.
+I may have found out what I may have done wrong make sure that you import Sentinel Analytics Rules before letting the machines rules for 24 hours.
+The hardening techniques that I used is just:
+- Closing the vulnerable ports
+- Choosing the recommended block setting
+- Adding Mircosoft Antimalware for Windows extension on the Windows VM
 
 
 `Start Time:` 2024-06-27T22:51:34 <br/>
