@@ -1,1 +1,28 @@
+| Metric                   | Count
+| ------------------------ | -----
+| SecurityEvent            | 
+| Syslog                   | 
+| SecurityAlert            | 
+| SecurityIncident         | 
+| AzureNetworkAnalytics_CL | 
 
+
+
+
+
+| Metric                   | Count
+| ------------------------ | -----
+| SecurityEvent            | 0
+| Syslog                   | 0
+| SecurityAlert            | 0
+| SecurityIncident         | 0
+| AzureNetworkAnalytics_CL | 0
+
+## Change after Securing Environment
+| Metric                                          | Percent
+| ----------------------------------------------- | -----
+| Security Event (Windows VM)                     |  -100.00%
+| Syslog (Linux VM)                               |  -100.00%
+| Security Alert (Microsoft Defender for Cloud)   |  -100.00%
+| Security Incident (Sentinel Incidents)          |  -100.00%
+| NSG Inbound Malicious Flows Allowed             |  -100.00%
