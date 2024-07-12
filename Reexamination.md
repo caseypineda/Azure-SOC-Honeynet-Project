@@ -30,16 +30,22 @@ The hardening techniques that I used is just:
 | Metric                   | Count
 | ------------------------ | -----
 | SecurityEvent            | 0
-| Syslog                   | 0
+| Syslog                   | 240
 | SecurityAlert            | 0
-| SecurityIncident         | 0
-| AzureNetworkAnalytics_CL | 0
+| SecurityIncident         | 10
+| AzureNetworkAnalytics_CL | 98
 
 ## Change after Securing Environment
 | Metric                                          | Percent
 | ----------------------------------------------- | -----
-| Security Event (Windows VM)                     |  
-| Syslog (Linux VM)                               |  
-| Security Alert (Microsoft Defender for Cloud)   |  
-| Security Incident (Sentinel Incidents)          |  
-| NSG Inbound Malicious Flows Allowed             |  
+| Security Event (Windows VM)                     |  0.00%
+| Syslog (Linux VM)                               | -96.46% 
+| Security Alert (Microsoft Defender for Cloud)   | -100.00% 
+| Security Incident (Sentinel Incidents)          |  900.00%
+| NSG Inbound Malicious Flows Allowed             | -94.65%
+
+
+Reflection
+
+Conclusion
+
